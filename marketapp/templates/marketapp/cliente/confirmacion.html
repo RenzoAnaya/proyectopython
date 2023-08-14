@@ -1,0 +1,27 @@
+{% extends 'marketapp/index.html' %}
+{% load static %}
+
+{% block titulo %}
+    Confirmación de Pedido
+{% endblock titulo %}
+
+{% block contenido %}
+    <h1 class="text-2xl text-center font-bold m-2 mb-4">¡Gracias por tu pedido!</h1>
+
+    <div class="w-full max-w-md mx-auto text-center">
+        
+        <p class="mb-4">
+            Tu pedido ha sido registrado con éxito. Pronto nos pondremos en contacto contigo para confirmar detalles y coordinar la entrega.
+        </p>
+
+        <div class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded relative mb-6" role="alert">
+            <strong class="font-bold">¡Recuerda!</strong>
+            <span class="block sm:inline"> El valor final a pagar puede variar dependiendo de los pesos finales de los productos.</span>
+        </div>
+
+        <a href="{% url 'inicio' %}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full">
+            Regresar a la página principal
+        </a>
+
+    </div>
+{% endblock contenido %}
