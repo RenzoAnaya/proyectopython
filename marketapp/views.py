@@ -1,12 +1,12 @@
 from django.shortcuts import redirect, render
 from django.urls import reverse, reverse_lazy
 from django.views.decorators.cache import never_cache
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required,user_passes_test
 from django.shortcuts import get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+
 
 from .models import *
 from .forms import *
@@ -309,11 +309,97 @@ class OrdenAdminCreateView(LoginRequiredMixin, CreateView):
     
 class OrdenAdminUpdateView(LoginRequiredMixin, UpdateView):
     model = Orden
-    form_class = OrdenForm
+    form_class = OrdenEditForm
     template_name = 'marketapp/admin/orden/edit.html'
     success_url = reverse_lazy('administracion:admin_orden_list')
+    
+    def get_context_data(self, **kwargs):
+        context = super(OrdenAdminUpdateView, self).get_context_data(**kwargs)
+        
+        # Manejo del formset
+        if self.request.POST:
+            context['elemento_orden_formset'] = ElementoOrdenFormSet(self.request.POST, instance=self.object)
+        else:
+            context['elemento_orden_formset'] = ElementoOrdenFormSet(instance=self.object)
+            
+        return context
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        elemento_orden_formset = context['elemento_orden_formset']
+        
+        if elemento_orden_formset.is_valid():
+            self.object = form.save()
+            elemento_orden_formset.instance = self.object
+            elemento_orden_formset.save()
+            return super(OrdenAdminUpdateView, self).form_valid(form)
+        else:
+            return self.render_to_response(self.get_context_data(form=form))
     
 class OrdenAdminDeleteView(LoginRequiredMixin, DeleteView):
     model = Orden
     template_name = 'marketapp/admin/orden/delete.html'
     success_url = reverse_lazy('administracion:admin_orden_list')
+    
+    
+#USURIO
+class UsuarioAdminListView(LoginRequiredMixin, ListView):
+    model = Usuario  
+    template_name = 'marketapp/admin/usuario/list.html'
+    context_object_name = 'users'
+
+class UsuarioAdminDetailView(LoginRequiredMixin, DetailView):
+    model = Usuario  
+    template_name = 'marketapp/admin/usuario/detail.html'
+    context_object_name = 'usuario'
+
+class UsuarioAdminCreateView(LoginRequiredMixin, CreateView):
+    model = Usuario  
+    form_class = UserAdminEditForm
+    template_name = 'marketapp/admin/usuario/create.html'
+    success_url = reverse_lazy('administracion:admin_usuario_list')
+    
+    
+
+class UsuarioAdminUpdateView(UpdateView):
+    model = Usuario  
+    form_class = UserAdminEditForm
+    template_name = 'marketapp/admin/usuario/edit.html'
+    success_url = reverse_lazy('administracion:admin_usuario_list')
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        
+        imagen = form.cleaned_data.get('imagen')
+        if imagen:
+            
+            avatar, created = Avatar.objects.get_or_create(usuario=self.object)
+            avatar.imagen = imagen
+            avatar.save()
+        
+        if self.object.avatar_set.exists():
+            self.request.session['avatar'] = self.object.avatar_set.first().imagen.url
+            pass
+
+        return response
+        
+
+class UsuarioAdminDeleteView(LoginRequiredMixin, DeleteView):
+    model = Usuario  
+    template_name = 'marketapp/admin/usuario/delete.html'
+    success_url = reverse_lazy('administracion:admin_usuario_list')
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+

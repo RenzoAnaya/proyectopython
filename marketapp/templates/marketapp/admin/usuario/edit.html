@@ -3,7 +3,7 @@
 {% block contenido %}
 <div class="container mx-auto mt-10 p-4">
     <div class="bg-white p-8 rounded-lg shadow-md">
-        <h2 class="text-2xl font-bold mb-6 text-center">Editar Producto</h2>
+        <h2 class="text-2xl font-bold mb-6 text-center">Editar Usuario</h2>
         
         <form method="post" enctype="multipart/form-data" class="space-y-6">
             {% csrf_token %}
@@ -13,18 +13,19 @@
                 <label for="{{ field.id_for_label }}" class="block text-gray-700 text-sm sm:text-base mb-2">{{ field.label }}</label>
 
                 {% if field.name == 'imagen' %}
-                    <div class="grid grid-cols-2">
-                    
-                    <div class="flex flex-col items-center mb-4 text-center ">
-                        <p class="text-gray-600 font-semibold">Imagen actual:</p>
-                        <img src="{{ field.value.url }}" alt="Imagen actual del producto" class="rounded shadow w-3/4 md:w-1/4">
-                    </div>
-                    
-                    
-                    <div class="flex flex-col items-center mb-4 text-center ">
-                        <p class="text-gray-600 font-semibold">Nueva imagen:</p>
-                        <img id="imagePreview" class="rounded shadow w-3/4 md:w-1/4" style="display: none;">
-                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="flex flex-col items-center mb-4 text-center">
+                            <p class="text-gray-600 font-semibold">Avatar actual:</p>
+                            {% if usuario.avatar_set.exists %}
+                                <img src="{{ usuario.avatar_set.first.imagen.url }}" alt="Avatar actual del usuario" class="rounded shadow w-3/4 md:w-1/4">
+                            {% else %}
+                                <img src="{{ request.scheme }}://{{ request.get_host }}{{ MEDIA_URL }}avatares/default.png" alt="" class="rounded-full object-cover h-9 w-9">
+                            {% endif %}
+                        </div>
+                        <div class="flex flex-col items-center mb-4 text-center">
+                            <p class="text-gray-600 font-semibold">Nuevo avatar:</p>
+                            <img id="imagePreview" class="rounded shadow w-3/4 md:w-1/4" style="display: none;">
+                        </div>
                     </div>
                 {% endif %}
 
@@ -45,7 +46,7 @@
     </div>
 </div>
 
-<!-- JavaScript para previsualizar la imagen seleccionada -->
+
 <script>
     document.querySelector('[name="imagen"]').addEventListener('change', function(event) {
         const imagePreview = document.getElementById('imagePreview');

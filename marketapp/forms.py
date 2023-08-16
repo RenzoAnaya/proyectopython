@@ -5,6 +5,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.db.models import Q
 from django.contrib.auth import get_user_model
+from django.forms import inlineformset_factory
 
 
 
@@ -48,7 +49,27 @@ class OrdenForm(forms.ModelForm):
                     'value': fecha_domingo.strftime('%Y-%m-%d'),
                 }),
         }
+    
+class ElementoOrdenForm(forms.ModelForm):
+    class Meta:
+        model = ElementoOrden
+        fields = ['producto', 'cantidad']
         
+class OrdenEditForm(forms.ModelForm):
+    class Meta:
+        model = Orden
+        fields = ['first_name', 'last_name', 'email', 'telefono', 'direccion', 'fecha_entrega_deseada']
+        
+    
+ElementoOrdenFormSet = inlineformset_factory(
+    Orden, 
+    ElementoOrden, 
+    form=ElementoOrdenForm, 
+    extra=1,
+    can_delete=True
+)
+
+
 class RegistroUsuariosForm(UserCreationForm):
     email = forms.EmailField(label="Email Usuario")
     password1 = forms.CharField(label="Contraseña", widget=forms.PasswordInput)
@@ -58,18 +79,59 @@ class RegistroUsuariosForm(UserCreationForm):
         model = Usuario
         fields = ['first_name', 'last_name', 'email', 'password1', 'password2']
         help_texts = {k:"" for k in fields}
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.username = self.cleaned_data['email']
+        if commit:
+            user.save()
+        return user
         
 
     
-class UserEditForm(UserCreationForm):
+class UserEditForm(forms.ModelForm):
     imagen = forms.ImageField(required=False, label="Avatar")
 
     class Meta:
         model = Usuario
         fields = ['first_name', 'last_name', 'email', 'telefono', 'direccion', 'ciudad', 'distrito', 'codigo_postal', 'imagen']
 
-        
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if Usuario.objects.filter(username=email).exclude(pk=self.instance.pk).exists():
+            raise forms.ValidationError("El email ya está en uso.")
+        return email
 
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.username = user.email
+        if commit:
+            user.save()
+        return user
+
+        
+class UserAdminEditForm(forms.ModelForm):
+    imagen = forms.ImageField(required=False, label="Avatar")
+    password1 = forms.CharField(widget=forms.HiddenInput(), required=False)
+    password2 = forms.CharField(widget=forms.HiddenInput(), required=False)
+
+    class Meta:
+        model = Usuario
+        fields = ['first_name', 'last_name', 'email', 'telefono', 'direccion', 'ciudad', 'distrito', 'codigo_postal', 'imagen', 'tipo_usuario']
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+
+        if Usuario.objects.filter(username=email).exclude(pk=self.instance.pk).exists():
+            raise forms.ValidationError("El email ya está en uso.")
+        return email
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.username = user.email
+        if commit:
+            user.save()
+        return user
 
 class EmailAuthenticationForm(AuthenticationForm):
 

@@ -3,15 +3,15 @@
 {% block contenido %}
 <div class="container mx-auto mt-10 p-4">
     <div class="bg-white p-8 rounded-lg shadow-md">
-        <h2 class="text-2xl font-bold mb-6 text-red-600">Eliminar Orden</h2>
-        <p class="mb-4">¿Estás seguro de que deseas eliminar esta orden "{{ orden.id }}"? Esta acción no se puede deshacer.</p>
+        <h2 class="text-2xl font-bold mb-6 text-red-600">Eliminar Usuario</h2>
+        <p class="mb-4">¿Estás seguro de que deseas eliminar al usuario {{ usuario.first_name }} {{ usuario.last_name }}? Esta acción no se puede deshacer.</p>
         
         <form method="post">
             {% csrf_token %}
             
             <div class="flex justify-start space-x-4">
                 <input type="submit" value="Eliminar" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-lg">
-                <a href="{% url 'administracion:admin_orden_list' %}" class="bg-gray-300 hover:bg-gray-400 text-black font-bold py-2 px-4 rounded-lg">Cancelar</a>
+                <a href="{% url 'administracion:admin_usuario_list' %}" class="bg-gray-300 hover:bg-gray-400 text-black font-bold py-2 px-4 rounded-lg">Cancelar</a>
             </div>
         </form>
     </div>

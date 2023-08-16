@@ -37,6 +37,12 @@ admin_patterns = [
     path('orden/editar/<int:pk>/', OrdenAdminUpdateView.as_view(), name='admin_orden_edit'),
     path('orden/eliminar/<int:pk>/', OrdenAdminDeleteView.as_view(), name='admin_orden_delete'),
     
+    path('usuario/', UsuarioAdminListView.as_view(), name='admin_usuario_list'),
+    path('usuario/<int:pk>/', UsuarioAdminDetailView.as_view(), name='admin_usuario_detail'),
+    path('usuario/crear/', UsuarioAdminCreateView.as_view(), name='admin_usuario_create'),
+    path('usuario/editar/<int:pk>/', UsuarioAdminUpdateView.as_view(), name='admin_usuario_edit'),
+    path('usuario/eliminar/<int:pk>/', UsuarioAdminDeleteView.as_view(), name='admin_usuario_delete'),
+    
     ]   
 
 urlpatterns += [

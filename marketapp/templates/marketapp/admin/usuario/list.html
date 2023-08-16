@@ -1,0 +1,40 @@
+{% extends "marketapp/admin/adminIndex.html" %}
+
+{% block contenido %}
+<div class="container mx-auto mt-10 md:p-4">
+    <div class="flex justify-between items-center mb-6">
+        <h2 class="text-2xl font-bold">Lista de Usuarios</h2>
+        <a href="{% url 'administracion:admin_usuario_create' %}" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg">
+            Añadir Usuario
+        </a>
+    </div>
+
+    <table class="min-w-full bg-white">
+        <thead>
+            <tr>
+                <th class="py-0 md:py-2 md:px-4 border-b border-gray-300 text-left">Nombre</th>
+                <th class="py-0 md:py-2 md:px-4 border-b border-gray-300 text-left">Email</th>
+                <th class="py-0 md:py-2 md:px-4 border-b border-gray-300 text-left">Teléfono</th>
+                <th class="py-0 md:py-2 md:px-4 border-b border-gray-300 text-left">Ciudad</th>
+                <th class="py-0 md:py-2 md:px-4 border-b border-gray-300 text-left">Tipo de Usuario</th>
+                <th class="py-0 md:py-2 md:px-4 border-b border-gray-300 text-left">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for usuario in users %}
+            <tr>
+                <td class="py-0 px-2 md:py-2 md:px-4 border-b border-gray-300"><a href="{% url 'administracion:admin_usuario_detail' usuario.id %}" class="text-blue-500 hover:text-blue-600">{{ usuario.first_name }} {{ usuario.last_name }}</a></td>
+                <td class="py-0 md:py-2 md:px-4 border-b border-gray-300">{{ usuario.email }}</td>
+                <td class="py-0 md:py-2 md:px-4 border-b border-gray-300">{{ usuario.telefono }}</td>
+                <td class="py-0 md:py-2 md:px-4 border-b border-gray-300">{{ usuario.ciudad }}</td>
+                <td class="py-0 md:py-2 md:px-4 border-b border-gray-300">{{ usuario.get_tipo_usuario_display }}</td>
+                <td class="py-0 md:py-2  md:px-4 border-b border-gray-300 ">
+                    <a href="{% url 'administracion:admin_usuario_edit' usuario.id %}" class="text-blue-500 hover:text-blue-600 ml-1">Editar</a>
+                    <a href="{% url 'administracion:admin_usuario_delete' usuario.id %}" class="text-red-500 hover:text-red-600 ml-1">Eliminar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

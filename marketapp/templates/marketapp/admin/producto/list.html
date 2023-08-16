@@ -12,22 +12,22 @@
     <table class="min-w-full bg-white">
         <thead>
             <tr>
-                <th class="py-2 md:px-4 border-b border-gray-300 text-left">Nombre</th>
-                <th class="py-2 md:px-4 border-b border-gray-300 text-left">Precio</th>
-                <th class="py-2 md:px-4 border-b border-gray-300 text-left">Categoría</th>
-                <th class="py-2 md:px-4 border-b border-gray-300 text-left">Envase</th>
-                <th class="py-2 md:px-4 border-b border-gray-300 text-left">Acciones</th>
+                <th class="py-0 md:py-2 md:px-4 border-b border-gray-300 text-left">Nombre</th>
+                <th class="py-0 md:py-2 md:px-4 border-b border-gray-300 text-left">Precio</th>
+                <th class="py-0 md:py-2 md:px-4 border-b border-gray-300 text-left">Categoría</th>
+                <th class="py-0 md:py-2 md:px-4 border-b border-gray-300 text-left">Envase</th>
+                <th class="py-0 md:py-2 md:px-4 border-b border-gray-300 text-left">Acciones</th>
 
             </tr>
         </thead>
         <tbody>
             {% for producto in productos %}
             <tr>
-                <td class="px-1 py-2 md:px-4 border-b border-gray-300"><a href="{% url 'administracion:admin_producto_detail' producto.id %}" class="text-blue-500 hover:text-blue-600">{{ producto.nombre }}</a></td>
-                <td class="py-2 md:px-4 border-b border-gray-300">{{ producto.precio }}</td>
-                <td class="py-2 md:px-4 border-b border-gray-300">{{ producto.categoria }}</td>
-                <td class="py-2 md:px-4 border-b border-gray-300">{{ producto.envase }}</td>
-                <td class="grid items-center  py-2 md:px-4 border-b border-gray-300 md:block">
+                <td class="py-0 px-2 md:py-2 md:px-4 border-b border-gray-300"><a href="{% url 'administracion:admin_producto_detail' producto.id %}" class="text-blue-500 hover:text-blue-600">{{ producto.nombre }}</a></td>
+                <td class="py-0 md:py-2 md:px-4 border-b border-gray-300">{{ producto.precio }}</td>
+                <td class="py-0 md:py-2 md:px-4 border-b border-gray-300">{{ producto.categoria }}</td>
+                <td class="py-0 md:py-2 md:px-4 border-b border-gray-300">{{ producto.envase }}</td>
+                <td class="py-0 md:py-2 grid items-center  md:px-4 border-b border-gray-300 md:block">
                     <a href="{% url 'administracion:admin_producto_edit' producto.id %}" class="text-blue-500 hover:text-blue-600 ml-1">Editar</a>
                     <a href="{% url 'administracion:admin_producto_delete' producto.id %}" class="text-red-500 hover:text-red-600 ml-1">Eliminar</a>
                 </td>

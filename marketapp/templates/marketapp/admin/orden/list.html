@@ -27,8 +27,8 @@
                 </td>
                 <td class="py-2 md:px-4 border-b border-gray-300">{{ orden.direccion }}</td>
                 <td class="py-2 md:px-4 border-b border-gray-300">{{ orden.fecha_entrega_deseada }}</td>
-                <td class="py-2 md:px-4 border-b border-gray-300">{{ orden.orden.total_a_pagar }}</td>
-                <td class="grid items-center py-2 md:px-4 border-b border-gray-300 md:block">
+                <td class="py-2 md:px-4 border-b border-gray-300">{{ orden.total_a_pagar }}</td>
+                <td class="py-2 md:px-4 border-b border-gray-300 ">
                     <a href="{% url 'administracion:admin_orden_edit' orden.id %}" class="text-blue-500 hover:text-blue-600 ml-1">Editar</a>
                     <a href="{% url 'administracion:admin_orden_delete' orden.id %}" class="text-red-500 hover:text-red-600 ml-1">Eliminar</a>
                 </td>

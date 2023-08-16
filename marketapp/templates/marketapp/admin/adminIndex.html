@@ -25,35 +25,30 @@
     <!-- Barra de navegación -->
     <nav class="bg-white p-2 px-4 shadow-md relative">
         <div class="container mx-auto flex justify-between items-center">
-            <h1 class="text-2xl font-bold text-green-600"><a href="{% url 'inicio' %}">Organik</a></h1>
+            <h1 class="text-2xl font-bold text-green-600"><a href="{% url 'administracion:adminIndex' %}">Organik</a></h1>
 
             {% if user.is_authenticated %}
-                <div onclick="toggleDropdown()" class="flex ml-4 my-2 md:my-0 items-center">
-                    <button class="md:hidden p-2 rounded-md hover:bg-green-200">&#9776;</button>
+                <div onclick="toggleDropdown()" class="flex ml-4 my-2 items-center">
+                    <button class="p-2 rounded-md hover:bg-green-200">&#9776;</button>
                     <img src="{{ request.session.avatar }}" alt="" class="rounded-full object-cover h-9 w-9">
                     <p class="ml-1">{{ user.first_name | upper }}</p>
                 </div>
-                <div id="dropdownMenu" class="hidden md:flex flex-col md:flex-row absolute top-full right-0 w-64 mt-2 mr-2 bg-white shadow-md md:relative md:w-auto md:mt-0 md:shadow-none z-10 rounded-lg">
+                <div id="dropdownMenu" class="hidden flex-col absolute top-full right-0 w-64 mt-2 mr-2 bg-white shadow-md z-10 rounded-lg">
                 {% if user.is_staff %}
-                        <a href="{% url 'administracion:admin_orden_list' %}" class=" text-green-700 px-4 py-1  block text-center my-1 md:my-0 md:ml-4">Órdenes</a>
-                        <a href="{% url 'administracion:admin_producto_list' %}" class=" text-green-700 px-4 py-1  block text-center my-1 md:my-0 md:ml-4">Productos</a>
-                        <a href="" class=" text-green-700 px-4 py-1  block text-center my-1 md:my-0 md:ml-4">Categorías</a>
-                        <a href="" class=" text-green-700 px-4 py-1  block text-center my-1 md:my-0 md:ml-4">Empaques</a>
+                        <a href="{% url 'administracion:admin_orden_list' %}" class=" text-green-700 px-4 py-1  block text-center my-1">Órdenes</a>
+                        <a href="{% url 'administracion:admin_producto_list' %}" class=" text-green-700 px-4 py-1  block text-center my-1">Productos</a>
+                        <a href="{% url 'administracion:admin_usuario_list' %}" class=" text-green-700 px-4 py-1  block text-center my-1">Usuarios</a>
+                        <a href="" class=" text-green-700 px-4 py-1  block text-center my-1">Categorías</a>
+                        <a href="" class=" text-green-700 px-4 py-1  block text-center my-1">Empaques</a>
                     {% endif %}
-                    <a href="{% url 'editar_perfil' %}" class=" text-green-700 px-4 py-1  block text-center my-1 md:my-0 md:ml-4">Editar Perfil</a>
-                    <a href="{% url 'logout' %}" class=" text-red-600 px-4 py-1  block text-center my-1 md:my-0 md:ml-4">Cerrar sesión</a>
-                    
-                    <!-- Opciones de administración si el usuario es staff o administrador -->
-                    
-              
-                    <!-- Fin opciones de administración -->
-                    
+                    <a href="{% url 'editar_perfil' %}" class=" text-green-700 px-4 py-1  block text-center my-1">Editar Perfil</a>
+                    <a href="{% url 'logout' %}" class=" text-red-600 px-4 py-1  block text-center my-1">Cerrar sesión</a>
                 </div>
             {% else %}
-                <button onclick="toggleDropdown()" class="md:hidden p-2 rounded-md hover:bg-green-200">&#9776;</button>
+                <button onclick="toggleDropdown()" class="p-2 rounded-md hover:bg-green-200">&#9776;</button>
                 
-                <div id="dropdownMenu" class="hidden md:flex flex-col md:flex-row absolute top-full right-0 w-64 mt-2 mr-2 bg-white shadow-md md:relative md:w-auto md:mt-0 md:shadow-none z-10 rounded-lg">
-                    <a href="{% url 'login' %}" class="bg-green-500 text-white px-4 py-1 rounded hover:bg-green-600 block text-center my-1 md:my-0 md:ml-4">Iniciar sesión</a>
+                <div id="dropdownMenu" class="hidden flex-col absolute top-full right-0 w-64 mt-2 mr-2 bg-white shadow-md z-10 rounded-lg">
+                    <a href="{% url 'login' %}" class="bg-green-500 text-white px-4 py-1 rounded hover:bg-green-600 block text-center my-1">Iniciar sesión</a>
                     <a href="{% url 'registro' %}" class="text-green-600 hover:underline mx-2 block text-center my-1">Registrate</a>
                 </div>
             {% endif %}

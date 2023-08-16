@@ -121,8 +121,20 @@ class Orden(models.Model):
 
     def calcular_total_a_pagar(self):
         self.total_a_pagar = self.total + self.costo_envio - self.descuento
-        self.save()
+    
+    def recalcular_total(self):
+        total = 0
+        elementos = self.elementoorden_set.all()
+        for elemento in elementos:
+            total += elemento.total
+        self.total = total
 
+    def save(self, recalculate_elements=True, *args, **kwargs):
+        if recalculate_elements:
+            self.recalcular_total()
+        self.calcular_total_a_pagar()
+        super(Orden, self).save(*args, **kwargs)
+        
     def __str__(self):
         return f"{self.first_name} {self.last_name} - {self.id}"
 
@@ -135,7 +147,14 @@ class ElementoOrden(models.Model):
     @property
     def total(self):
         return self.producto.precio * self.cantidad
-
+    
+    def save(self, recalculate_order=True, *args, **kwargs):
+        super(ElementoOrden, self).save(*args, **kwargs)
+        if recalculate_order:
+            self.orden.recalcular_total()
+            self.orden.calcular_total_a_pagar()
+            self.orden.save(recalculate_elements=False)
+            
     def __str__(self):
         return f"{self.cantidad} de {self.producto.nombre}"
 

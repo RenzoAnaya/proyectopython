@@ -1,0 +1,64 @@
+{% extends "marketapp/admin/adminIndex.html" %}
+{% block contenido %}
+<div class="container mx-auto mt-10 p-4">
+    <div class="bg-white p-8 rounded-lg shadow-md">
+        <h2 class="text-2xl font-bold mb-6">Detalles de la Orden</h2>
+        
+        {# Detalles de la Orden #}
+        <div class="mb-6">
+            <h3 class="text-xl font-semibold mb-4">Información de la Orden</h3>
+            <p><strong>Fecha de la Orden:</strong> {{ object.fecha_creacion }}</p>
+            <p><strong>Dirección de Entrega:</strong> {{ object.direccion }}</p>
+            <p><strong>Fecha de Entrega:</strong> {{ object.fecha_entrega_deseada }}</p>
+        </div>
+        
+        {# Productos Asociados #}
+        <h3 class="text-xl font-semibold mb-4">Productos</h3>
+        <table class="min-w-full bg-white border">
+            <thead>
+                <tr>
+                    <th class="border px-4 py-2 text-left">Producto</th>
+                    <th class="border px-4 py-2 text-left">Cantidad</th>
+                    <th class="border px-4 py-2 text-left">Precio Unitario</th>
+                    <th class="border px-4 py-2 text-left">Precio Total</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for elemento in object.elementoorden_set.all %}
+                <tr>
+                    <td class="border px-4 py-2">{{ elemento.producto }}</td>
+                    <td class="border px-4 py-2">{{ elemento.cantidad }}</td>
+                    <td class="border px-4 py-2">{{ elemento.producto.precio }}</td>
+                    <td class="border px-4 py-2">{{ elemento.total }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="3" class="border px-6 py-2 text-right font-semibold">Subtotal:</td>
+                    <td class="border px-6 py-2">{{ object.total }}</td>
+                </tr>
+                <tr>
+                    <td colspan="3" class="border px-6 py-2 text-right font-semibold">Descuento:</td>
+                    <td class="border px-6 py-2">-{{ object.descuento }}</td>
+                </tr>
+                <tr>
+                    <td colspan="3" class="border px-6 py-2 text-right font-semibold">Costo de Envío:</td>
+                    <td class="border px-6 py-2">{{ object.costo_envio }}</td>
+                </tr>
+                <tr>
+                    <td colspan="3" class="border px-6 py-2 text-right font-semibold">Total:</td>
+                    <td class="border px-6 py-2">{{ object.total_a_pagar }}</td>
+                </tr>
+            </tfoot>
+        </table>
+
+        {# Botón de edición #}
+        <div class="mt-6 text-right">
+            <a href="{% url 'administracion:admin_orden_edit' orden.id %}" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg">
+                Editar Orden
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
