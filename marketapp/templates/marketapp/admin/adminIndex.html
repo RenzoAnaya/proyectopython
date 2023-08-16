@@ -1,0 +1,80 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="enS">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>
+        {% block titulo %}
+        Panel de Administración - Organik
+        {% endblock titulo %}
+    </title>
+    <script>
+        function toggleDropdown() {
+            const dropdownMenu = document.getElementById('dropdownMenu');
+            dropdownMenu.classList.toggle('hidden');
+        }
+    </script>
+</head>
+
+<body class="bg-green-50">
+
+    <!-- Barra de navegación -->
+    <nav class="bg-white p-2 px-4 shadow-md relative">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-green-600"><a href="{% url 'inicio' %}">Organik</a></h1>
+
+            {% if user.is_authenticated %}
+                <div onclick="toggleDropdown()" class="flex ml-4 my-2 md:my-0 items-center">
+                    <button class="md:hidden p-2 rounded-md hover:bg-green-200">&#9776;</button>
+                    <img src="{{ request.session.avatar }}" alt="" class="rounded-full object-cover h-9 w-9">
+                    <p class="ml-1">{{ user.first_name | upper }}</p>
+                </div>
+                <div id="dropdownMenu" class="hidden md:flex flex-col md:flex-row absolute top-full right-0 w-64 mt-2 mr-2 bg-white shadow-md md:relative md:w-auto md:mt-0 md:shadow-none z-10 rounded-lg">
+                {% if user.is_staff %}
+                        <a href="{% url 'administracion:admin_orden_list' %}" class=" text-green-700 px-4 py-1  block text-center my-1 md:my-0 md:ml-4">Órdenes</a>
+                        <a href="{% url 'administracion:admin_producto_list' %}" class=" text-green-700 px-4 py-1  block text-center my-1 md:my-0 md:ml-4">Productos</a>
+                        <a href="" class=" text-green-700 px-4 py-1  block text-center my-1 md:my-0 md:ml-4">Categorías</a>
+                        <a href="" class=" text-green-700 px-4 py-1  block text-center my-1 md:my-0 md:ml-4">Empaques</a>
+                    {% endif %}
+                    <a href="{% url 'editar_perfil' %}" class=" text-green-700 px-4 py-1  block text-center my-1 md:my-0 md:ml-4">Editar Perfil</a>
+                    <a href="{% url 'logout' %}" class=" text-red-600 px-4 py-1  block text-center my-1 md:my-0 md:ml-4">Cerrar sesión</a>
+                    
+                    <!-- Opciones de administración si el usuario es staff o administrador -->
+                    
+              
+                    <!-- Fin opciones de administración -->
+                    
+                </div>
+            {% else %}
+                <button onclick="toggleDropdown()" class="md:hidden p-2 rounded-md hover:bg-green-200">&#9776;</button>
+                
+                <div id="dropdownMenu" class="hidden md:flex flex-col md:flex-row absolute top-full right-0 w-64 mt-2 mr-2 bg-white shadow-md md:relative md:w-auto md:mt-0 md:shadow-none z-10 rounded-lg">
+                    <a href="{% url 'login' %}" class="bg-green-500 text-white px-4 py-1 rounded hover:bg-green-600 block text-center my-1 md:my-0 md:ml-4">Iniciar sesión</a>
+                    <a href="{% url 'registro' %}" class="text-green-600 hover:underline mx-2 block text-center my-1">Registrate</a>
+                </div>
+            {% endif %}
+        </div>
+    </nav>
+
+    <!-- Contenido principal -->
+    <main class="container mx-auto mt-10 p-4 ">
+        {% block contenido %}
+        <h1 class="text-2xl text-center text-green-800">Hola {{ request.user.username }}</h1>
+        {% endblock contenido %}
+    </main>
+    
+    <!-- Pie de página -->
+    <footer class="bg-white mt-10 p-4 shadow-t">
+        <div class="container mx-auto text-center">
+            <p class="text-gray-700">&copy; 2023 Supermercado Orgánico. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+</body>
+
+</html>

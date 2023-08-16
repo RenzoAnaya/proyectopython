@@ -1,0 +1,42 @@
+{% extends "marketapp/index.html" %}
+{% load widget_tweaks %}
+
+{% block titulo %}
+Editar Perfil - Organik
+{% endblock titulo %}
+
+{% block contenido %}
+<div class="container mx-auto mt-10 p-4">
+    <div class="bg-white p-8 rounded-lg shadow-md">
+        <h2 class="text-2xl font-bold mb-6 text-green-600">Editar Perfil</h2>
+        
+        <form method="post" enctype="multipart/form-data" class="space-y-6">
+            {% csrf_token %}
+            
+            {% for field in form %}
+            <div class="mb-4">
+                <label for="{{ field.id_for_label }}" class="block text-gray-700 text-sm sm:text-base mb-2">{{ field.label }}</label>
+                
+                <div>
+
+                    {% if field.name == "imagen" %}
+                        <img src="{{ request.session.avatar }}" alt="Avatar de {{ usuario.username }}" class="mb-2 w-20 h-20 rounded-full object-cover">
+                        {{ field|add_class:"border rounded-lg p-2 w-full text-sm sm:text-base focus:ring-green-500 focus:border-green-500" }}
+                    {% else %}
+                        {{ field|add_class:"border rounded-lg p-2 w-full text-sm sm:text-base focus:ring-green-500 focus:border-green-500" }}
+                    {% endif %}
+
+                    {% if field.errors %}
+                        <p class="mt-1 text-xs text-red-600">{{ field.errors.0 }}</p>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+            
+            <div class="flex justify-center">
+                <input type="submit" value="Actualizar Perfil" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg">
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock contenido %}

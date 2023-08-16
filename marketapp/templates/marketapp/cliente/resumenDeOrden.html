@@ -36,35 +36,36 @@
                 {% endfor %}
             </tbody>
         </table>
-        <div class="mt-4 sm:mt-6 text-right">
-       <p class="text-lg md:text-2xl">Total productos: S/{{ total }}</p>
-    <p class="text-lg md:text-2xl">Descuento: S/{{ form.initial.descuento }}</p>
-    <p class="text-lg md:text-2xl">Costo de Envío: S/{{ form.initial.costo_envio }}</p>
-    <p class="text-lg md:text-2xl">Total a Pagar: S/{{ form.initial.total_a_pagar }}</p>
-    </div>
+        <div class="mt-6 space-y-4 text-center">
+            <p class="text-lg md:text-2xl font-bold">Total productos: <span class="text-green-600 font-normal font-semibold">S/{{ total }}</span></p>
+            <p class="text-lg md:text-2xl font-bold">Descuento: <span class="text-red-600  font-semibold">S/{{ form.initial.descuento }}</span></p>
+            <p class="text-lg md:text-2xl font-bold">Costo de Envío: <span class="text-green-600 font-semibold">S/{{ form.initial.costo_envio }}</span></p>
+            <p class="text-lg md:text-2xl font-bold">Total a Pagar: <span class="text-green-600 font-semibold">S/{{ form.initial.total_a_pagar }}</span></p>
+        </div>
+
     </div>
 
     <h2 class="text-2xl md:text-3xl font-bold mb-4 sm:mb-6 text-green-600 mt-4">Datos de Entrega</h2>
-        <div class="bg-white shadow rounded-lg p-4">
-            <form method="post" class="space-y-6">
-                {% csrf_token %}
+    <div class="bg-white shadow rounded-lg p-4">
+        <form method="post" class="space-y-6">
+            {% csrf_token %}
 
-                {% for field in form %}
-                <div class="mb-4">
-                    <label for="{{ field.id_for_label }}" class="block text-gray-700 text-sm sm:text-base mb-2">{{ field.label }}</label>
-                    <div>
-                        {{ field|add_class:"border rounded-lg p-2 w-full text-sm sm:text-base" }}
-                        {% if field.errors %}
-                        <p class="mt-1 text-xs text-red-600">{{ field.errors.0 }}</p>
-                        {% endif %}
-                    </div>
+            {% for field in form %}
+            <div class="mb-4">
+                <label for="{{ field.id_for_label }}" class="block text-gray-700 text-sm sm:text-base mb-2">{{ field.label }}</label>
+                <div>
+                    {{ field|add_class:"border rounded-lg p-2 w-full text-sm sm:text-base" }}
+                    {% if field.errors %}
+                    <p class="mt-1 text-xs text-red-600">{{ field.errors.0 }}</p>
+                    {% endif %}
                 </div>
-                {% endfor %}
+            </div>
+            {% endfor %}
 
-                <div class="flex justify-center">
-                    <input type="submit" value="Realizar pedido" class="bg-green-500 hover:bg-green-800 text-white font-bold py-2 px-4 rounded-lg">
-                </div>
-            </form>
-        </div>
+            <div class="flex justify-center">
+                <input type="submit" value="Realizar pedido" class="bg-green-500 hover:bg-green-800 text-white font-bold py-2 px-4 rounded-lg">
+            </div>
+        </form>
+    </div>
 </div>
 {% endblock contenido %}

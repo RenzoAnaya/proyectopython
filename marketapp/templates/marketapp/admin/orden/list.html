@@ -1,0 +1,40 @@
+{% extends "marketapp/admin/adminIndex.html" %}
+
+{% block contenido %}
+<div class="container mx-auto mt-10 md:p-4">
+    <div class="flex justify-between items-center mb-6">
+        <h2 class="text-2xl font-bold">Lista de Órdenes</h2>
+        <a href="{% url 'administracion:admin_orden_create' %}" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg">
+            Añadir Orden
+        </a>
+    </div>
+
+    <table class="min-w-full bg-white">
+        <thead>
+            <tr>
+                <th class="py-2 md:px-4 border-b border-gray-300 text-left">Nombre </th>
+                <th class="py-2 md:px-4 border-b border-gray-300 text-left">Dirección</th>
+                <th class="py-2 md:px-4 border-b border-gray-300 text-left">Fecha de Entrega</th>
+                <th class="py-2 md:px-4 border-b border-gray-300 text-left">Total a Pagar</th>
+                <th class="py-2 md:px-4 border-b border-gray-300 text-left">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for orden in ordenes %}
+            <tr>
+                <td class="px-1 py-2 md:px-4 border-b border-gray-300">
+                    <a href="{% url 'administracion:admin_orden_detail' orden.id %}" class="text-blue-500 hover:text-blue-600">{{ orden.first_name }} {{ orden.last_name}}</a>
+                </td>
+                <td class="py-2 md:px-4 border-b border-gray-300">{{ orden.direccion }}</td>
+                <td class="py-2 md:px-4 border-b border-gray-300">{{ orden.fecha_entrega_deseada }}</td>
+                <td class="py-2 md:px-4 border-b border-gray-300">{{ orden.orden.total_a_pagar }}</td>
+                <td class="grid items-center py-2 md:px-4 border-b border-gray-300 md:block">
+                    <a href="{% url 'administracion:admin_orden_edit' orden.id %}" class="text-blue-500 hover:text-blue-600 ml-1">Editar</a>
+                    <a href="{% url 'administracion:admin_orden_delete' orden.id %}" class="text-red-500 hover:text-red-600 ml-1">Eliminar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

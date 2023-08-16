@@ -26,21 +26,28 @@
     <nav class="bg-white p-2 px-4 shadow-md relative">
         <div class="container mx-auto flex justify-between items-center">
             <h1 class="text-2xl font-bold text-green-600"><a href="{% url 'inicio' %}">Organik</a></h1>
+            <a href="{% url 'about' %}" class=" text-green-700 px-4 py-1  block text-center my-1 md:my-0 md:ml-4">Acerca de mi</a>
             {% if user.is_authenticated %}
-                <div class="flex ml-4 my-2 md:my-0 items-center">
-                    <img src="{% static 'marketapp/assets/img/frutas.jpg' %}" alt="" class="rounded-full object-cover h-9 w-9">
-                    <p class="ml-1">Renzo Anaya</p>
+                <div onclick="toggleDropdown()" class="flex ml-4 my-2 md:my-0 items-center">
+                <button  class="md:hidden p-2 rounded-md hover:bg-green-200">&#9776;</button>
+                    <img src="{{ request.session.avatar }}" alt="" class="rounded-full object-cover h-9 w-9">
+                    <p class="ml-1">{{user.first_name | upper}}</p>
                 </div>
+            <div id="dropdownMenu" class="hidden md:flex flex-col md:flex-row absolute top-full right-0 w-64 mt-2 mr-2 bg-white shadow-md md:relative md:w-auto md:mt-0 md:shadow-none z-10 rounded-lg">
+                <a href="{% url 'editar_perfil' %}" class=" text-green-700 px-4 py-1  block text-center my-1 md:my-0 md:ml-4">Editar Perfil</a>
+                <a href="{% url 'logout' %}" class=" text-red-600 px-4 py-1  block text-center my-1 md:my-0 md:ml-4">Cerrar sesión</a>
+                
+            </div>
             {% else %}
             <button onclick="toggleDropdown()" class="md:hidden p-2 rounded-md hover:bg-green-200">&#9776;</button>
             
             <div id="dropdownMenu" class="hidden md:flex flex-col md:flex-row absolute top-full right-0 w-64 mt-2 mr-2 bg-white shadow-md md:relative md:w-auto md:mt-0 md:shadow-none z-10 rounded-lg">
                 
+                <a href="{% url 'login' %}" class="bg-green-500 text-white px-4 py-1 rounded hover:bg-green-600 block text-center my-1 md:my-0 md:ml-4">Iniciar sesión</a>
+                <a href="{% url 'registro' %}" class="text-green-600 hover:underline mx-2 block text-center my-1">Registrate</a>
                 
-                <a href="#" class="bg-green-500 text-white px-4 py-1 rounded hover:bg-green-600 block text-center my-1 md:my-0 md:ml-4">Inicia sesión</a>
-                <a href="#" class="text-green-600 hover:underline mx-2 block text-center my-1">Registrate</a>
-                {% endif %}
             </div>
+            {% endif %}
         </div>
     </nav>
 
@@ -48,6 +55,13 @@
     <main class="container mx-auto mt-10 p-4 ">
     {% block contenido %}
         <div class="bg-white  p-8 rounded-lg shadow-md text-center">
+            {% if mensaje %}
+
+            <h4 style="color:red" align="center">
+            {{mensaje}}
+            </h4>
+
+            {% endif %}
             <h2 class="text-3xl font-bold mb-6 text-green-600">Organik</h2>
             <p class="text-lg text-gray-700 mb-6">Donde comprar es más fácil que hacer tu lista de compras</p>
             <img src="{% static 'marketapp/assets/img/frutas.jpg' %}" alt="Productos Orgánicos" class="mx-auto mb-6 w-full max-w-md">

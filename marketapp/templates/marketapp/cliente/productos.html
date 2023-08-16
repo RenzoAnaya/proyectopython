@@ -25,7 +25,9 @@
 
                         <div class="grid grid-cols-10 bg-white rounded-lg shadow-lg shadow-cyan-500/50 mb-2">
                             <div class="col-span-7 flex items-center">
+                                {% if producto.imagen %}
                                 <img src="{{producto.imagen.url}}" alt="{{ producto.nombre }}" class="w-1/4 p-2 mr-2">
+                                {% endif %}
                                 <div>
                                     <p class="text-left">{{ producto.nombre }}</p>
                                     <p>S/{{ producto.precio }} x {{ producto.envase }}</p>

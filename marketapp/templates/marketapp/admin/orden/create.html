@@ -1,0 +1,31 @@
+{% extends "marketapp/admin/adminIndex.html" %}
+{% load widget_tweaks %}
+{% block contenido %}
+<div class="container mx-auto mt-10 p-4">
+    <div class="bg-white p-8 rounded-lg shadow-md">
+        <h2 class="text-2xl font-bold mb-6">Añadir Nueva Orden</h2>
+        
+        <form method="post" class="space-y-6">
+            {% csrf_token %}
+            
+            {% for field in form %}
+            <div class="mb-4">
+                <label for="{{ field.id_for_label }}" class="block text-gray-700 text-sm sm:text-base mb-2">{{ field.label }}</label>
+                
+                <div>
+                    {{ field|add_class:"border rounded-lg p-2 w-full text-sm sm:text-base focus:ring-green-500 focus:border-green-500" }}
+                    
+                    {% if field.errors %}
+                        <p class="mt-1 text-xs text-red-600">{{ field.errors.0 }}</p>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+            
+            <div class="flex justify-center">
+                <input type="submit" value="Añadir Producto" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg">
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock contenido %}
