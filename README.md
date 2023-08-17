@@ -2,6 +2,9 @@
 
 ORGANIK
 
+Link video:
+https://drive.google.com/file/d/1LPssfYiWLlKt5cenFwxCvV9e3zJgP7d-/view?usp=sharing
+
 Credenciales:
 - Usuario en /admin: admin
 - Usuario en login para /administracion: ranayab@hotmail.com
