@@ -4,6 +4,7 @@ ORGANIK
 
 Link video:
 https://drive.google.com/file/d/1LPssfYiWLlKt5cenFwxCvV9e3zJgP7d-/view?usp=sharing
+También agregado al repositorio por el formato en drive
 
 Credenciales:
 - Usuario en /admin: admin
