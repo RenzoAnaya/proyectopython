@@ -43,6 +43,20 @@ admin_patterns = [
     path('usuario/editar/<int:pk>/', UsuarioAdminUpdateView.as_view(), name='admin_usuario_edit'),
     path('usuario/eliminar/<int:pk>/', UsuarioAdminDeleteView.as_view(), name='admin_usuario_delete'),
     
+    #ENVASE
+    path('envase/', EnvaseAdminListView.as_view(), name='admin_envase_list'),
+    path('envase/<int:pk>/', EnvaseAdminDetailView.as_view(), name='admin_envase_detail'),
+    path('envase/crear/', EnvaseAdminCreateView.as_view(), name='admin_envase_create'),
+    path('envase/editar/<int:pk>/', EnvaseAdminUpdateView.as_view(), name='admin_envase_edit'),
+    path('envase/eliminar/<int:pk>/', EnvaseAdminDeleteView.as_view(), name='admin_envase_delete'),
+    
+    path('categoria/', CategoriaAdminListView.as_view(), name='admin_categoria_list'),
+    path('categoria/<int:pk>/', CategoriaAdminDetailView.as_view(), name='admin_categoria_detail'),
+    path('categoria/crear/', CategoriaAdminCreateView.as_view(), name='admin_categoria_create'),
+    path('categoria/editar/<int:pk>/', CategoriaAdminUpdateView.as_view(), name='admin_categoria_edit'),
+    path('categoria/eliminar/<int:pk>/', CategoriaAdminDeleteView.as_view(), name='admin_categoria_delete'),
+
+    
     ]   
 
 urlpatterns += [

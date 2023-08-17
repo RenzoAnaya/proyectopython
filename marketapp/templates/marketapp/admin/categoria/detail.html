@@ -1,0 +1,17 @@
+{% extends "marketapp/admin/adminIndex.html" %}
+{% block contenido %}
+
+<div class="container mx-auto mt-10 p-4">
+    <h2 class="text-2xl font-bold mb-6">Detalles de Categoría</h2>
+    <div class="bg-white p-8 rounded-lg shadow-md">
+        <div class="mb-4">
+            <span class="font-bold text-gray-700 block mb-1">Nombre:</span>
+            <span class="text-gray-600">{{ categoria.nombre }}</span>
+        </div>
+        <div class="mb-4">
+            <span class="font-bold text-gray-700 block mb-1">Descripción:</span>
+            <span class="text-gray-600">{{ categoria.descripcion }}</span>
+        </div>
+    </div>
+</div>
+{% endblock %}

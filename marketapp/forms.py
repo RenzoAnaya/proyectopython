@@ -147,3 +147,30 @@ class EmailAuthenticationForm(AuthenticationForm):
                 pass
 
         return username
+    
+class EnvaseForm(forms.ModelForm):
+    class Meta:
+        model = Envase
+        fields = ['nombre', 'valor']
+        widgets = {
+            'nombre': forms.TextInput(attrs={'class': 'form-control'}),
+            'valor': forms.NumberInput(attrs={'class': 'form-control'}),
+        }
+        labels = {
+            'nombre': 'Nombre del envase',
+            'valor': 'Factor de costo',
+        }
+        
+class CategoriaForm(forms.ModelForm):
+    class Meta:
+        model = Categoria
+        fields = ['nombre', 'descripcion']
+        
+        widgets = {
+            'nombre': forms.TextInput(attrs={'class': 'form-control'}),
+            'descripcion': forms.Textarea(attrs={'class': 'form-control'}),
+        }
+        labels = {
+            'nombre': 'Nombre de la categoría',
+            'descripcion': 'Descripción de la categoría',
+        }

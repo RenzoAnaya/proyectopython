@@ -294,6 +294,15 @@ class OrdenAdminListView(LoginRequiredMixin, ListView):
     model = Orden
     template_name = 'marketapp/admin/orden/list.html'
     context_object_name = 'ordenes'
+    
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        
+        search_term = self.request.GET.get('search', '')
+        if search_term:
+            queryset = queryset.filter(first_name__icontains=search_term)
+
+        return queryset
 
 
 class OrdenAdminDetailView(LoginRequiredMixin, DetailView):
@@ -391,11 +400,70 @@ class UsuarioAdminDeleteView(LoginRequiredMixin, DeleteView):
     
 
     
-    
 
+
+
+
+#ENVASE
+class EnvaseAdminListView(ListView):
+    model = Envase
+    template_name = 'marketapp/admin/envase/list.html'
+    context_object_name = 'envases'
+
+class EnvaseAdminDetailView(DetailView):
+    model = Envase
+    template_name = 'marketapp/admin/envase/detail.html'
+    context_object_name = 'envase'
+
+class EnvaseAdminCreateView(CreateView):
+    model = Envase
+    form_class = EnvaseForm
+    template_name = 'marketapp/admin/envase/create.html'
+    success_url = reverse_lazy('administracion:admin_envase_list')
+
+class EnvaseAdminUpdateView(UpdateView):
+    model = Envase
+    form_class = EnvaseForm
+    template_name = 'marketapp/admin/envase/edit.html'
+    success_url = reverse_lazy('administracion:admin_envase_list')
+
+class EnvaseAdminDeleteView(DeleteView):
+    model = Envase
+    template_name = 'marketapp/admin/envase/delete.html'
+    success_url = reverse_lazy('administracion:admin_envase_list')
     
     
-    
+#CATEGORIA
+class CategoriaAdminListView(ListView):
+    model = Categoria
+    template_name = 'marketapp/admin/categoria/list.html'
+    context_object_name = 'categorias'
+
+
+class CategoriaAdminDetailView(DetailView):
+    model = Categoria
+    template_name = 'marketapp/admin/categoria/detail.html'
+    context_object_name = 'categoria'
+
+
+class CategoriaAdminCreateView(CreateView):
+    model = Categoria
+    form_class = CategoriaForm
+    template_name = 'marketapp/admin/categoria/create.html'
+    success_url = reverse_lazy('administracion:admin_categoria_list')
+
+
+class CategoriaAdminUpdateView(UpdateView):
+    model = Categoria
+    form_class = CategoriaForm
+    template_name = 'marketapp/admin/categoria/edit.html'
+    success_url = reverse_lazy('administracion:admin_categoria_list')
+
+
+class CategoriaAdminDeleteView(DeleteView):
+    model = Categoria
+    template_name = 'marketapp/admin/categoria/delete.html'
+    success_url = reverse_lazy('administracion:admin_categoria_list')
     
     
     

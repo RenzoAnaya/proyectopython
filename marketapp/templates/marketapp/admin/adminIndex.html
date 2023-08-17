@@ -38,8 +38,9 @@
                         <a href="{% url 'administracion:admin_orden_list' %}" class=" text-green-700 px-4 py-1  block text-center my-1">Órdenes</a>
                         <a href="{% url 'administracion:admin_producto_list' %}" class=" text-green-700 px-4 py-1  block text-center my-1">Productos</a>
                         <a href="{% url 'administracion:admin_usuario_list' %}" class=" text-green-700 px-4 py-1  block text-center my-1">Usuarios</a>
-                        <a href="" class=" text-green-700 px-4 py-1  block text-center my-1">Categorías</a>
-                        <a href="" class=" text-green-700 px-4 py-1  block text-center my-1">Empaques</a>
+                        <a href="{% url 'administracion:admin_envase_list' %}" class=" text-green-700 px-4 py-1  block text-center my-1">Envase</a>
+                        <a href="{% url 'administracion:admin_categoria_list' %}" class=" text-green-700 px-4 py-1  block text-center my-1">Categorías</a>
+                        
                     {% endif %}
                     <a href="{% url 'editar_perfil' %}" class=" text-green-700 px-4 py-1  block text-center my-1">Editar Perfil</a>
                     <a href="{% url 'logout' %}" class=" text-red-600 px-4 py-1  block text-center my-1">Cerrar sesión</a>

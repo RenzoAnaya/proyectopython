@@ -3,7 +3,15 @@
 {% block contenido %}
 <div class="container mx-auto mt-10 md:p-4">
     <div class="flex justify-between items-center mb-6">
-        <h2 class="text-2xl font-bold">Lista de Órdenes</h2>
+        <div>
+            <h2 class="text-2xl font-bold inline-block mr-4">Lista de Órdenes</h2>
+            
+            <form class="inline-block" method="get" action=".">
+                <input type="text" name="search" placeholder="Buscar por nombre..." value="{{ request.GET.search }}" class="py-1 px-2 rounded-l border border-gray-300">
+                <button type="submit" class="py-1 px-2 rounded-r bg-blue-500 hover:bg-blue-600 text-white">Buscar</button>
+            </form>
+        </div>
+        
         <a href="{% url 'administracion:admin_orden_create' %}" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg">
             Añadir Orden
         </a>
