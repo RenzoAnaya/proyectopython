@@ -3,7 +3,8 @@
 ORGANIK
 
 Credenciales:
-- Usuario: admin
+- Usuario en /admin: admin
+- Usuario en login para /administracion: ranayab@hotmail.com
 - Contraseña: Coder2023
 
 

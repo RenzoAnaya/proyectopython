@@ -121,7 +121,7 @@ def resumenOrden(request):
                 orden.direccion = nueva_direccion_envio  # Asignar la dirección creada a la orden
                 
             orden.save()
-            
+
             for item in carrito:
                 producto = Producto.objects.get(pk=item['producto_id'])
                 elemento_orden = ElementoOrden(orden=orden, producto=producto, cantidad=item['cantidad'])
@@ -201,10 +201,7 @@ def editarPerfil(request):
     usuario = request.user
     avatar_actual = None
 
-    try:
-        avatar_actual = Avatar.objects.get(usuario=usuario)
-    except Avatar.DoesNotExist:
-        pass
+    avatar_actual = Avatar.objects.filter(usuario=usuario).first()
 
     if request.method == "POST":
         form = UserEditForm(request.POST, request.FILES, instance=usuario)
@@ -225,39 +222,38 @@ def editarPerfil(request):
             user.save()
 
             # AVATAR
-            avatar_imagen = request.FILES.get('imagen', None)
-            if avatar_imagen:  
-                if avatar_actual:  
+            avatar_imagen = form.cleaned_data.get('imagen')
+            if avatar_imagen:
+                if avatar_actual:
                     avatar_actual.imagen = avatar_imagen
                     avatar_actual.save()
-                else:  
+                else:
                     Avatar.objects.create(usuario=user, imagen=avatar_imagen)
-            elif not avatar_actual:  
+            elif not avatar_actual:
                 default_image_path = Avatar.get_default_image_path()
                 Avatar.objects.create(usuario=user, imagen=default_image_path)
 
-            return render(request, "marketapp/index.html", {"mensaje":"Usuario actualizado"})
+            if user.avatar_set.exists():
+                request.session['avatar'] = user.avatar_set.first().imagen.url
+
+            return render(request, "marketapp/index.html", {"mensaje": "Usuario actualizado"})
     else:
-        # DATA INICIAL
         initial_data = {
             'first_name': usuario.first_name,
             'last_name': usuario.last_name,
             'email': usuario.email,
-            'telefono': usuario.telefono ,
-            'direccion': usuario.direccion ,
+            'telefono': usuario.telefono,
+            'direccion': usuario.direccion,
             'imagen': avatar_actual.imagen.url if avatar_actual else Avatar.get_default_image_path()
         }
         form = UserEditForm(instance=usuario, initial=initial_data)
 
-    return render(request, "marketapp/editarPerfil.html", {'form':form, 'usuario':usuario.username})
+    return render(request, "marketapp/editarPerfil.html", {'form': form, 'usuario': usuario.username})
 
 
-
-
-#VIEWS ADMIN
 
 #PRODUCTO
-
+@login_required
 def indexAdmin(request):
     return render(request,"marketapp/admin/adminIndex.html")
 
@@ -288,6 +284,9 @@ class ProductoAdminDeleteView(LoginRequiredMixin,DeleteView):
     model = Producto
     template_name = 'marketapp/admin/producto/delete.html'
     success_url = reverse_lazy('administracion:admin_producto_list')
+    
+    
+    
     
 #ORDEN
 class OrdenAdminListView(LoginRequiredMixin, ListView):
@@ -351,7 +350,7 @@ class OrdenAdminDeleteView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('administracion:admin_orden_list')
     
     
-#USURIO
+#USUARIO
 class UsuarioAdminListView(LoginRequiredMixin, ListView):
     model = Usuario  
     template_name = 'marketapp/admin/usuario/list.html'

@@ -130,10 +130,12 @@ class Orden(models.Model):
         self.total = total
 
     def save(self, recalculate_elements=True, *args, **kwargs):
+        super(Orden, self).save(*args, **kwargs)
+        
         if recalculate_elements:
             self.recalcular_total()
-        self.calcular_total_a_pagar()
-        super(Orden, self).save(*args, **kwargs)
+            self.calcular_total_a_pagar()
+            super(Orden, self).save(*args, **kwargs)
         
     def __str__(self):
         return f"{self.first_name} {self.last_name} - {self.id}"
