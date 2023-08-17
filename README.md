@@ -19,6 +19,8 @@ La búsqueda en orden/list.html o /administracion/orden se puede realizar con la
 
 En resumen estos son los modelos:
 
+
+
 Categoria:
 
 nombre: El nombre de la categoría.
@@ -27,11 +29,15 @@ descripcion: Descripción opcional de la categoría.
 
 
 
+
+
 Envase:
 
 nombre: El nombre del envase.
 
 valor: Un factor de costo asociado al envase.
+
+
 
 
 
@@ -53,6 +59,8 @@ envase: Tipo de envase asociado al producto.
 
 
 
+
+
 DireccionEnvio:
 
 direccion: Dirección completa.
@@ -65,11 +73,15 @@ codigo_postal: Código postal.
 
 
 
+
+
 Avatar:
 
 imagen: Imagen de avatar del usuario.
 
 usuario: Usuario al que pertenece el avatar.
+
+
 
 
 
@@ -85,6 +97,8 @@ fecha_actualizacion: Fecha de la última actualización del carrito.
 
 
 
+
+
 ElementoCarrito:
 
 carrito: Carrito al que pertenece el elemento.
@@ -92,6 +106,8 @@ carrito: Carrito al que pertenece el elemento.
 producto: Producto asociado al elemento del carrito.
 
 cantidad: Cantidad del producto en el carrito.
+
+
 
 
 
@@ -125,6 +141,8 @@ total_a_pagar: Monto total a pagar considerando descuentos y envío.
 
 
 
+
+
 ElementoOrden:
 
 orden: Orden a la que pertenece el elemento.
@@ -132,6 +150,8 @@ orden: Orden a la que pertenece el elemento.
 producto: Producto asociado al elemento de la orden.
 
 cantidad: Cantidad del producto en la orden.
+
+
 
 
 
@@ -143,11 +163,15 @@ fecha: Fecha del registro histórico.
 
 
 
+
+
 Pago:
 
 orden: Orden asociada al pago.
 
 monto: Monto pagado.
+
+
 
 
 
